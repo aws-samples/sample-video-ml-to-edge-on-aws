@@ -1,0 +1,312 @@
+[
+ {
+  "check": "CKV_AWS_95",
+  "resource": "ConveyorIntake.template.json:AWS::ApiGatewayV2::Stage.PortalApiDefaultStageF868017C",
+  "reason": "API Gateway access logging is off to keep the sample small; the presign function logs each issued URL with the caller's Cognito sub and username"
+ },
+ {
+  "check": "CKV_AWS_174",
+  "resource": "ConveyorIntake.template.json:AWS::CloudFront::Distribution.PortalDistribution29412EF8",
+  "reason": "The CloudFront default certificate fixes the viewer TLS policy; attach a custom domain and certificate to require TLS 1.2"
+ },
+ {
+  "check": "CKV_AWS_68",
+  "resource": "ConveyorIntake.template.json:AWS::CloudFront::Distribution.PortalDistribution29412EF8",
+  "reason": "No AWS WAF web ACL, to keep idle cost low; the API requires a Cognito JWT. Attach a web ACL for production"
+ },
+ {
+  "check": "CKV_AWS_86",
+  "resource": "ConveyorIntake.template.json:AWS::CloudFront::Distribution.PortalDistribution29412EF8",
+  "reason": "CloudFront access logging is off to keep the sample small; enable it for production"
+ },
+ {
+  "check": "CKV_AWS_111",
+  "resource": "ConveyorIntake.template.json:AWS::IAM::Policy.CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+  "reason": "CDK BucketDeployment role; its only wildcard resource is cloudfront:CreateInvalidation, which takes no resource ARN; its S3 writes are scoped to the portal site bucket"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_173",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+  "reason": "Environment variables hold only resource names and allowlists, no secrets"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalPresignFn9AF1D712",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalPresignFn9AF1D712",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalPresignFn9AF1D712",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_173",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalPresignFn9AF1D712",
+  "reason": "Environment variables hold only resource names and allowlists, no secrets"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalUploadStatusFn409F4364",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalUploadStatusFn409F4364",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalUploadStatusFn409F4364",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_173",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.PortalUploadStatusFn409F4364",
+  "reason": "Environment variables hold only resource names and allowlists, no secrets"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.ValidationFnECD2A43E",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.ValidationFnECD2A43E",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.ValidationFnECD2A43E",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_173",
+  "resource": "ConveyorIntake.template.json:AWS::Lambda::Function.ValidationFnECD2A43E",
+  "reason": "Environment variables hold only resource names and allowlists, no secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorIntake.template.json:AWS::Logs::LogGroup.PortalDeployLogsD45FF6A2",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorIntake.template.json:AWS::Logs::LogGroup.PortalPresignLogsB77C0D1B",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorIntake.template.json:AWS::Logs::LogGroup.PortalUploadStatusLogs7C3D7509",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorIntake.template.json:AWS::Logs::LogGroup.ValidationLogsB74CE65E",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_18",
+  "resource": "ConveyorIntake.template.json:AWS::S3::Bucket.CuratedBucket90F6C1E7",
+  "reason": "S3 server access logging is off to keep the sample small; enable it or CloudTrail S3 data events for production"
+ },
+ {
+  "check": "CKV_AWS_18",
+  "resource": "ConveyorIntake.template.json:AWS::S3::Bucket.IntakeBucketDF3620F2",
+  "reason": "S3 server access logging is off to keep the sample small; enable it or CloudTrail S3 data events for production"
+ },
+ {
+  "check": "CKV_AWS_18",
+  "resource": "ConveyorIntake.template.json:AWS::S3::Bucket.PortalSite2367B7D1",
+  "reason": "S3 server access logging is off to keep the sample small; enable it or CloudTrail S3 data events for production"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.PublishFn01BC1374",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.PublishFn01BC1374",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.PublishFn01BC1374",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_173",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.PublishFn01BC1374",
+  "reason": "Environment variables hold only resource names and allowlists, no secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorMl.template.json:AWS::Logs::LogGroup.PublishLogs921C90B3",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.RegisterFn59C72DCF",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.RegisterFn59C72DCF",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.RegisterFn59C72DCF",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_173",
+  "resource": "ConveyorMl.template.json:AWS::Lambda::Function.RegisterFn59C72DCF",
+  "reason": "Environment variables hold only resource names and allowlists, no secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorMl.template.json:AWS::Logs::LogGroup.RegisterLogs01221AED",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_18",
+  "resource": "ConveyorMl.template.json:AWS::S3::Bucket.MlBucket9B93B6B1",
+  "reason": "S3 server access logging is off to keep the sample small; enable it or CloudTrail S3 data events for production"
+ },
+ {
+  "check": "CKV_AWS_18",
+  "resource": "ConveyorMl.template.json:AWS::S3::Bucket.ReleaseBucket73C30537",
+  "reason": "S3 server access logging is off to keep the sample small; enable it or CloudTrail S3 data events for production"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Lambda::Function.AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Lambda::Function.AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Lambda::Function.AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Lambda::Function.CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Lambda::Function.CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Lambda::Function.CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Logs::LogGroup.NetworkFlowLogs2BEC3212",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorSite-factory-a.template.json:AWS::Logs::LogGroup.NetworkS3PrefixListLogs54418591",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Lambda::Function.AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Lambda::Function.AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Lambda::Function.AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_115",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Lambda::Function.CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+  "reason": "CDK-provided or single-purpose Lambda invoked by one AWS event source; reserved concurrency would only cap it"
+ },
+ {
+  "check": "CKV_AWS_116",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Lambda::Function.CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+  "reason": "Invoked by CloudFormation, EventBridge or API Gateway, which retry or return the error; a dead-letter queue adds nothing in the sample"
+ },
+ {
+  "check": "CKV_AWS_117",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Lambda::Function.CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+  "reason": "Calls only regional AWS APIs and needs no VPC"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Logs::LogGroup.NetworkFlowLogs2BEC3212",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ },
+ {
+  "check": "CKV_AWS_158",
+  "resource": "ConveyorSite-factory-b.template.json:AWS::Logs::LogGroup.NetworkS3PrefixListLogs54418591",
+  "reason": "CloudWatch Logs encrypts log data at rest by default; these groups hold no clip content or secrets"
+ }
+]

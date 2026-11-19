@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+infra/cdk.out*/
+infra/layers/opencv/python/
+site/wheels/
+data/
+runs/
+*.log
+.DS_Store
+# Local previews only: the build copies shared/ui/tokens.css into each UI.
+web/tokens.css
+site/gateway/static/tokens.css

@@ -1,0 +1,76 @@
+<!doctype html>
+<!-- Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. SPDX-License-Identifier: MIT-0 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AnyCompany Robotics clip contributions</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="portal.css">
+<script src="auth.js" defer></script>
+<script src="uploads.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="signin-wrap" id="signin-view">
+  <div class="signin-story">
+    <span class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><b>AnyCompany Robotics</b></span>
+    <div>
+      <h1>Teach the line cameras what a jam looks like.</h1>
+      <p>Upload short clips from your conveyor line and label what they show. Accepted clips train the model that every site gateway runs.</p>
+    </div>
+    <div class="belt-art" aria-hidden="true"><div class="parts"><i></i><i></i><i></i></div><div class="belt"></div><small>NORMAL &middot; JAM &middot; DROP &middot; EMPTY</small></div>
+  </div>
+  <main class="signin-panel">
+    <form class="signin-form" id="signin">
+      <h2>Sign in</h2>
+      <p class="lede">Use the account your administrator created for you.</p>
+      <div class="notice" id="signin-notice" role="status" hidden><span aria-hidden="true">&#9432;</span><span id="signin-message"></span></div>
+      <div class="field"><label for="username">Username</label><input id="username" name="username" autocomplete="username" required></div>
+      <div class="field" id="password-row"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+      <div class="field" id="new-password-row" hidden><label for="new-password">New password</label><input id="new-password" name="newPassword" type="password" autocomplete="new-password" aria-describedby="new-password-hint"><span class="hint" id="new-password-hint">At least 12 characters, with upper and lower case letters, a number and a symbol.</span></div>
+      <div class="field" id="repeat-password-row" hidden><label for="repeat-password">Repeat new password</label><input id="repeat-password" name="repeatPassword" type="password" autocomplete="new-password"></div>
+      <button class="btn primary" type="submit" id="signin-button">Sign in</button>
+      <p class="fineprint">No account? Ask your site administrator. Contributors cannot sign themselves up.</p>
+    </form>
+  </main>
+</div>
+
+<div id="app-view" hidden>
+  <header class="topbar">
+    <span class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><b>AnyCompany Robotics</b><span>Clip contributions</span></span>
+    <div class="who"><span>Signed in as <strong id="who-name"></strong></span><span class="site-tag" id="who-site" title="Your site"></span><button class="btn quiet" type="button" id="sign-out">Sign out</button></div>
+  </header>
+  <main class="work">
+    <div class="col">
+      <section class="card">
+        <fieldset class="chips" id="chips">
+          <legend class="card-head"><h2><span class="step">1</span>What do the clips show?</h2></legend>
+        </fieldset>
+        <p class="sitenote">One label per upload batch. Clips are filed for <span class="mono" id="site-note"></span>, the site on your account.</p>
+      </section>
+      <section class="card">
+        <div class="card-head"><h2><span class="step">2</span>Add clips</h2></div>
+        <div class="drop" id="drop">
+          <strong>Drop .mp4 clips here or <label for="pick">browse files</label></strong>
+          <input id="pick" class="visually-hidden" type="file" accept="video/mp4" multiple>
+          <span class="formats">MP4 (H.264, H.265, VP9 or MPEG-4) &middot; up to 200 MB each</span>
+        </div>
+        <ul class="files" id="files"></ul>
+        <div class="actions"><button class="btn primary" type="button" id="upload" disabled>Choose a label and add clips</button><span class="aside">Clips go straight to Amazon S3 through a one-time upload link.</span></div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="card" aria-labelledby="recent-h">
+        <div class="card-head"><h2 id="recent-h"><span class="step">3</span>Your recent uploads</h2><span class="aside">Newest first</span></div>
+        <ul class="uploads" id="uploads">
+          <li class="up head" aria-hidden="true"><span>Clip</span><span>Label</span><span>Time</span>
+            <span class="legend"><span>Upload</span><span>Scan</span><span>Validate</span><span>Accept</span></span></li>
+        </ul>
+        <p class="empty-note">Every clip is scanned for malware and checked as a video before it joins the training pool. Clip names stay in this browser.</p>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

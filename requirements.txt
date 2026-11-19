@@ -1,0 +1,7 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+#
+# Every Python package the sample's tests, CI and training test install, from the
+# hash-locked files. Licences: THIRD-PARTY-LICENSES.md.
+-r requirements-dev.txt
+-r requirements-train.txt

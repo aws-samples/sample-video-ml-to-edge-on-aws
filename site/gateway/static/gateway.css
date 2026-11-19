@@ -1,0 +1,133 @@
+/* Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. SPDX-License-Identifier: MIT-0 */
+/* Site gateway UI: the on-site side. Plant-floor HMI convention: a grey, calm screen where
+   colour is reserved for state, and an alarm takes over its panel with a hazard edge. */
+:root {
+  --accent: #0b5560;
+  --ground: #d6dadd;
+  --panel: #f7f8f9;
+  --rule: #7d8790;
+}
+
+html { font-size: clamp(16px, 0.75vw + 7.4px, 22px); }
+body { margin: 0; font: var(--t-md)/1.45 var(--font-sans); color: var(--ink); background: var(--ground); }
+h1, h2, h3, p, dl, dd { margin: 0; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+
+.plate {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+  padding: var(--s-3) var(--s-5); background: var(--ink); color: #fff;
+}
+.plate .id { display: flex; align-items: baseline; gap: var(--s-4); }
+.plate .maker { font-size: var(--t-sm); color: #b8c3cd; }
+.plate h1 { font: 700 var(--t-xl)/1 var(--font-mono); letter-spacing: 0.02em; }
+.plate h1 span { color: #b8c3cd; font-weight: 400; }
+.plate .access { display: flex; align-items: center; gap: var(--s-4); font-size: var(--t-sm); color: #d4dce3; }
+.lamp { display: inline-flex; align-items: center; gap: var(--s-2); font: 700 var(--t-sm)/1 var(--font-mono);
+  text-transform: uppercase; letter-spacing: 0.05em; padding: var(--s-2) var(--s-3); border-radius: var(--r-1);
+  border: 2px solid #5d6b78; }
+.lamp::before { content: ""; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: currentColor; }
+.lamp.ok { color: #7ee0a5; }
+.lamp.idle { color: #d4dce3; }
+.lamp.alarm::before { background: var(--hazard); }
+.lamp.alarm { color: #fff; background: var(--alarm); border-color: var(--hazard); }
+
+.board {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-4);
+  padding: var(--s-4) var(--s-5); max-width: 110rem; margin: 0 auto;
+}
+.panel { background: var(--panel); border: 2px solid var(--rule); border-radius: var(--r-1); padding: var(--s-4) var(--s-5);
+  display: grid; gap: var(--s-4); align-content: start; }
+.panel h2 { font: 700 var(--t-sm)/1 var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
+
+.readouts { display: grid; grid-template-columns: 0.8fr 1.3fr 1fr; border: 2px solid var(--rule); border-radius: var(--r-1); }
+.readout { padding: var(--s-3); display: grid; gap: var(--s-1); align-content: start; }
+.readout + .readout { border-left: 2px solid var(--rule); }
+.readout .v { font: 700 var(--t-2xl)/1 var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; white-space: nowrap; }
+.readout .v small { font-size: var(--t-lg); color: var(--ink-2); font-weight: 400; }
+.readout .k { font-size: var(--t-sm); color: var(--ink-2); }
+.readout.ok .v { color: var(--ok); font-size: var(--t-xl); line-height: 1.43; }
+.readout.ok .v::before { content: "\2713\00a0"; }
+.readout.muted .v { color: var(--ink-2); }
+
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: var(--s-2) var(--s-4); font-size: var(--t-sm); }
+.facts dt { color: var(--ink-2); }
+.facts dd { font-weight: 600; }
+.facts .mono { font-weight: 600; }
+
+/* The alarm: impossible to miss, still says what keeps running */
+.alarm {
+  display: grid; grid-template-columns: 1.1rem 1fr; border-radius: var(--r-1); overflow: hidden;
+  background: var(--alarm); color: #fff; border: 2px solid #7a1912;
+}
+.alarm::before { content: ""; background: repeating-linear-gradient(135deg, var(--hazard) 0 10px, #15202b 10px 20px); }
+.alarm-body { padding: var(--s-3) var(--s-4); display: grid; gap: var(--s-1); }
+.alarm-body strong { font: 800 1.4rem/1.2 var(--font-sans); text-transform: uppercase; letter-spacing: 0.02em; }
+.alarm-body strong::before { content: "\26A0\FE0E\00a0"; }
+.alarm-body p { font-size: var(--t-md); }
+.alarm-body p b { background: #fff; color: var(--alarm); padding: 0 0.3em; border-radius: 2px; }
+.next { font-size: var(--t-sm); padding: var(--s-3) var(--s-4); border: 1px solid var(--rule); border-radius: var(--r-1); background: #e9ecee; }
+
+.waiting { display: grid; gap: var(--s-2); padding: var(--s-5) var(--s-4); border: 2px dashed var(--rule); border-radius: var(--r-1); text-align: center; }
+.waiting strong { font-size: var(--t-xl); }
+.waiting p { color: var(--ink-2); }
+
+/* Try a clip */
+.picker { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: stretch; }
+.drop { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4);
+  border: 2px dashed var(--rule); border-radius: var(--r-1); background: #fff; min-height: 3.5rem; }
+.drop label { color: var(--accent); text-decoration: underline; font-weight: 600; cursor: pointer; }
+.drop .file { font-family: var(--font-mono); font-weight: 600; }
+.drop .hint { color: var(--ink-2); font-size: var(--t-sm); }
+.btn { min-height: 3.5rem; padding: 0 var(--s-5); border-radius: var(--r-1); border: 2px solid var(--accent);
+  background: var(--accent); color: #fff; font-weight: 700; cursor: pointer; }
+.btn:disabled { background: #e4e7ea; border-color: #aab2b9; color: #5b6670; cursor: default; }
+
+.result { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); gap: var(--s-5); align-items: start; }
+.verdict { display: grid; gap: var(--s-3); }
+.verdict .label { display: flex; align-items: baseline; gap: var(--s-3); }
+.verdict .label b { font: 800 var(--t-3xl)/1 var(--font-sans); letter-spacing: -0.03em; }
+.verdict .label span { font: 700 var(--t-xl)/1 var(--font-mono); }
+.verdict .label small { display: block; font: 400 var(--t-sm)/1.2 var(--font-sans); color: var(--ink-2); }
+.scores { display: grid; gap: var(--s-2); margin: 0; padding: 0; list-style: none; }
+.scores li { display: grid; grid-template-columns: 4.2rem 1fr 4.2rem; gap: var(--s-3); align-items: center; font-size: var(--t-sm); }
+.scores .n { font-weight: 600; }
+.scores .p { font-family: var(--font-mono); text-align: right; font-variant-numeric: tabular-nums; }
+.scores li.top .n, .scores li.top .p { font-weight: 800; }
+progress { appearance: none; width: 100%; height: 0.9rem; border: 2px solid var(--rule); border-radius: 2px; background: #fff; }
+progress::-webkit-progress-bar { background: #fff; }
+progress::-webkit-progress-value { background: var(--ink-2); }
+progress::-moz-progress-bar { background: var(--ink-2); }
+.scores li.top progress::-webkit-progress-value { background: var(--ink); }
+.stamp { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); font-size: var(--t-sm); color: var(--ink-2);
+  border-top: 2px solid var(--rule); padding-top: var(--s-3); }
+.stamp .mono { color: var(--ink); font-weight: 700; }
+.stamp .local { color: var(--ink); font-weight: 600; flex-basis: 100%; }
+.stamp .local::before { content: "\2713\00a0"; color: var(--ok); }
+
+/* First frame of the clip, as the camera recorded it */
+.frame { aspect-ratio: 16 / 9; background: #20282e; border-radius: var(--r-1); overflow: hidden; border: 2px solid var(--ink); }
+.frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.frame-cap { font-size: var(--t-xs); color: var(--ink-2); margin-top: var(--s-1); }
+
+.reject { display: grid; grid-template-columns: auto 1fr; gap: var(--s-3); padding: var(--s-4); border: 2px solid var(--warn);
+  background: var(--warn-bg); border-radius: var(--r-1); }
+.reject .glyph { font: 800 var(--t-xl)/1 var(--font-sans); color: var(--warn); }
+.reject strong { display: block; font-size: var(--t-lg); color: var(--warn); }
+.reject p + p { margin-top: var(--s-2); }
+.idle-note { color: var(--ink-2); font-size: var(--t-sm); }
+
+@media (max-width: 1100px) {
+  .board { grid-template-columns: 1fr 1fr; padding: var(--s-3); gap: var(--s-3); }
+  .panel { padding: var(--s-3) var(--s-4); }
+  .readouts { grid-template-columns: 1fr 1fr; }
+  .readout:last-child { grid-column: 1 / -1; border-left: 0; border-top: 2px solid var(--rule); }
+  .plate .maker { display: none; }
+}
+@media (max-width: 760px) { .board { grid-template-columns: 1fr; } }
+.frame-wrap { margin: 0; }
+.plate h1, .plate .access span, .lamp { white-space: nowrap; }
+.panel.alarmed { border-color: var(--alarm); box-shadow: 0 0 0 2px var(--alarm); }
+@media (max-width: 1400px) { .plate .maker { display: none; } }
+@media (max-width: 1100px) { .plate .access > span:first-child { white-space: normal; text-align: right; } }
+.drop.over { border-color: var(--accent); background: #eef6f7; }

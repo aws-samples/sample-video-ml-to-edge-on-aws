@@ -1,0 +1,196 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadCdkBootstrapVersion",
+      "Effect": "Allow",
+      "Action": "ssm:GetParameter",
+      "Resource": "arn:aws:ssm:*:${aws:PrincipalAccount}:parameter/cdk-bootstrap/hnb659fds/version"
+    },
+    {
+      "Sid": "DeployAndDestroyThroughTheCdkRoles",
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole",
+        "sts:TagSession"
+      ],
+      "Resource": [
+        "arn:aws:iam::${aws:PrincipalAccount}:role/cdk-hnb659fds-deploy-role-${aws:PrincipalAccount}-*",
+        "arn:aws:iam::${aws:PrincipalAccount}:role/cdk-hnb659fds-file-publishing-role-${aws:PrincipalAccount}-*"
+      ]
+    },
+    {
+      "Sid": "ReadSampleStacks",
+      "Effect": "Allow",
+      "Action": "cloudformation:DescribeStacks",
+      "Resource": "arn:aws:cloudformation:*:${aws:PrincipalAccount}:stack/Conveyor*/*"
+    },
+    {
+      "Sid": "CreateContributors",
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:AdminAddUserToGroup",
+        "cognito-idp:AdminCreateUser"
+      ],
+      "Resource": "arn:aws:cognito-idp:*:${aws:PrincipalAccount}:userpool/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/project": "sample-video-ml-to-edge"
+        }
+      }
+    },
+    {
+      "Sid": "SpotTrainingQuota",
+      "Effect": "Allow",
+      "Action": [
+        "servicequotas:GetAWSDefaultServiceQuota",
+        "servicequotas:GetServiceQuota",
+        "servicequotas:RequestServiceQuotaIncrease"
+      ],
+      "Resource": "arn:aws:servicequotas:*:${aws:PrincipalAccount}:sagemaker/L-944F78BB"
+    },
+    {
+      "Sid": "ListCuratedClips",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::conveyorintake-curatedbucket*",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": "curated/*"
+        },
+        "StringEquals": {
+          "s3:ResourceAccount": "${aws:PrincipalAccount}"
+        }
+      }
+    },
+    {
+      "Sid": "SnapshotCuratedClips",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::conveyorintake-curatedbucket*/curated/*",
+      "Condition": {
+        "StringEquals": {
+          "s3:ResourceAccount": "${aws:PrincipalAccount}"
+        }
+      }
+    },
+    {
+      "Sid": "TrainingCodeManifestsAndOutput",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::conveyorml-mlbucket*/code/*",
+        "arn:aws:s3:::conveyorml-mlbucket*/manifests/*",
+        "arn:aws:s3:::conveyorml-mlbucket*/training-output/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "s3:ResourceAccount": "${aws:PrincipalAccount}"
+        }
+      }
+    },
+    {
+      "Sid": "SampleBucketKeys",
+      "Effect": "Allow",
+      "Action": [
+        "kms:Decrypt",
+        "kms:GenerateDataKey"
+      ],
+      "Resource": "arn:aws:kms:*:${aws:PrincipalAccount}:key/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/project": "sample-video-ml-to-edge"
+        }
+      }
+    },
+    {
+      "Sid": "TrainingJobs",
+      "Effect": "Allow",
+      "Action": [
+        "sagemaker:CreateTrainingJob",
+        "sagemaker:DescribeTrainingJob"
+      ],
+      "Resource": "arn:aws:sagemaker:*:${aws:PrincipalAccount}:training-job/tiny3d-*"
+    },
+    {
+      "Sid": "PassOnlyTheTrainingRoleToSageMaker",
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "arn:aws:iam::${aws:PrincipalAccount}:role/ConveyorMl-TrainingRole*",
+      "Condition": {
+        "StringEquals": {
+          "iam:PassedToService": "sagemaker.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid": "RegisterApproveAndDeleteModels",
+      "Effect": "Allow",
+      "Action": [
+        "sagemaker:CreateModelPackage",
+        "sagemaker:DeleteModelPackage",
+        "sagemaker:DescribeModelPackage",
+        "sagemaker:UpdateModelPackage"
+      ],
+      "Resource": [
+        "arn:aws:sagemaker:*:${aws:PrincipalAccount}:model-package-group/conveyor-events",
+        "arn:aws:sagemaker:*:${aws:PrincipalAccount}:model-package/conveyor-events/*"
+      ]
+    },
+    {
+      "Sid": "NoResourceLevelPermissions",
+      "Effect": "Allow",
+      "Action": [
+        "kms:ListKeys",
+        "logs:DescribeLogGroups",
+        "sagemaker:ListModelPackages"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "TeardownKeyStates",
+      "Effect": "Allow",
+      "Action": "kms:DescribeKey",
+      "Resource": "arn:aws:kms:*:${aws:PrincipalAccount}:key/*"
+    },
+    {
+      "Sid": "TeardownRunTimeLogGroups",
+      "Effect": "Allow",
+      "Action": "logs:DeleteLogGroup",
+      "Resource": "arn:aws:logs:*:${aws:PrincipalAccount}:log-group:/aws/lambda/Conveyor*"
+    },
+    {
+      "Sid": "OpenGatewayUi",
+      "Effect": "Allow",
+      "Action": "ssm:StartSession",
+      "Resource": "arn:aws:ec2:*:${aws:PrincipalAccount}:instance/*",
+      "Condition": {
+        "StringEquals": {
+          "ssm:resourceTag/project": "sample-video-ml-to-edge"
+        },
+        "BoolIfExists": {
+          "ssm:SessionDocumentAccessCheck": "true"
+        }
+      }
+    },
+    {
+      "Sid": "OnlyPortForwarding",
+      "Effect": "Allow",
+      "Action": "ssm:StartSession",
+      "Resource": "arn:aws:ssm:*::document/AWS-StartPortForwardingSession"
+    },
+    {
+      "Sid": "EndSessions",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:ResumeSession",
+        "ssm:TerminateSession"
+      ],
+      "Resource": "arn:aws:ssm:*:${aws:PrincipalAccount}:session/*"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+[Unit]
+Description=Fetch, verify and install the site's model release
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# Root, because it installs under /opt/conveyor and restarts the UI; the self-test
+# of a new release drops to conveyor with setpriv, which these settings allow.
+ExecStart=/bin/bash /opt/conveyor/bin/fetch_release.sh
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/conveyor
+ProtectHome=true
+PrivateTmp=true

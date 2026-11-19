@@ -1,0 +1,275 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ApiGateway",
+      "Effect": "Allow",
+      "Action": [
+        "apigateway:DELETE",
+        "apigateway:GET",
+        "apigateway:PATCH",
+        "apigateway:POST",
+        "apigateway:PUT",
+        "apigateway:TagResource",
+        "apigateway:UntagResource"
+      ],
+      "Resource": [
+        "arn:aws:apigateway:*::/apis",
+        "arn:aws:apigateway:*::/apis/*",
+        "arn:aws:apigateway:*::/tags/*"
+      ]
+    },
+    {
+      "Sid": "CloudFront",
+      "Effect": "Allow",
+      "Action": [
+        "cloudfront:DeleteDistribution",
+        "cloudfront:DeleteOriginAccessControl",
+        "cloudfront:DeleteResponseHeadersPolicy",
+        "cloudfront:GetDistribution",
+        "cloudfront:GetDistributionConfig",
+        "cloudfront:GetOriginAccessControl",
+        "cloudfront:GetResponseHeadersPolicy",
+        "cloudfront:ListTagsForResource",
+        "cloudfront:TagResource",
+        "cloudfront:UntagResource",
+        "cloudfront:UpdateDistribution",
+        "cloudfront:UpdateDistributionWithStagingConfig",
+        "cloudfront:UpdateOriginAccessControl",
+        "cloudfront:UpdateResponseHeadersPolicy"
+      ],
+      "Resource": [
+        "arn:aws:cloudfront::${aws:PrincipalAccount}:distribution/*",
+        "arn:aws:cloudfront::${aws:PrincipalAccount}:origin-access-control/*",
+        "arn:aws:cloudfront::${aws:PrincipalAccount}:response-headers-policy/*"
+      ]
+    },
+    {
+      "Sid": "Cognito",
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:AddCustomAttributes",
+        "cognito-idp:CreateGroup",
+        "cognito-idp:CreateUserPoolClient",
+        "cognito-idp:DeleteGroup",
+        "cognito-idp:DeleteUserPool",
+        "cognito-idp:DeleteUserPoolClient",
+        "cognito-idp:DescribeUserPool",
+        "cognito-idp:DescribeUserPoolClient",
+        "cognito-idp:GetGroup",
+        "cognito-idp:GetUserPoolMfaConfig",
+        "cognito-idp:ListTagsForResource",
+        "cognito-idp:ListUserPoolClientSecrets",
+        "cognito-idp:SetUserPoolMfaConfig",
+        "cognito-idp:TagResource",
+        "cognito-idp:UntagResource",
+        "cognito-idp:UpdateGroup",
+        "cognito-idp:UpdateUserPool",
+        "cognito-idp:UpdateUserPoolClient"
+      ],
+      "Resource": [
+        "arn:aws:cognito-idp:*:${aws:PrincipalAccount}:userpool/*"
+      ]
+    },
+    {
+      "Sid": "EventRules",
+      "Effect": "Allow",
+      "Action": [
+        "events:DeleteRule",
+        "events:DescribeRule",
+        "events:ListTagsForResource",
+        "events:ListTargetsByRule",
+        "events:PutRule",
+        "events:PutTargets",
+        "events:RemoveTargets",
+        "events:TagResource",
+        "events:UntagResource"
+      ],
+      "Resource": [
+        "arn:aws:events:*:${aws:PrincipalAccount}:rule/Conveyor*"
+      ]
+    },
+    {
+      "Sid": "GuardDutyMalwareProtectionPlan",
+      "Effect": "Allow",
+      "Action": [
+        "guardduty:DeleteMalwareProtectionPlan",
+        "guardduty:GetMalwareProtectionPlan",
+        "guardduty:TagResource",
+        "guardduty:UntagResource",
+        "guardduty:UpdateMalwareProtectionPlan"
+      ],
+      "Resource": [
+        "arn:aws:guardduty:*:${aws:PrincipalAccount}:malware-protection-plan/*"
+      ]
+    },
+    {
+      "Sid": "Buckets",
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:CreateBucketMetadataTableConfiguration",
+        "s3:DeleteBucket",
+        "s3:DeleteBucketMetadataTableConfiguration",
+        "s3:DeleteBucketPolicy",
+        "s3:DeleteBucketWebsite",
+        "s3:DeleteObject",
+        "s3:GetAccelerateConfiguration",
+        "s3:GetAnalyticsConfiguration",
+        "s3:GetBucketAbac",
+        "s3:GetBucketAcl",
+        "s3:GetBucketCORS",
+        "s3:GetBucketLogging",
+        "s3:GetBucketMetadataTableConfiguration",
+        "s3:GetBucketNotification",
+        "s3:GetBucketObjectLockConfiguration",
+        "s3:GetBucketOwnershipControls",
+        "s3:GetBucketPolicy",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:GetBucketTagging",
+        "s3:GetBucketVersioning",
+        "s3:GetBucketWebsite",
+        "s3:GetEncryptionConfiguration",
+        "s3:GetIntelligentTieringConfiguration",
+        "s3:GetInventoryConfiguration",
+        "s3:GetLifecycleConfiguration",
+        "s3:GetMetricsConfiguration",
+        "s3:GetReplicationConfiguration",
+        "s3:ListBucket",
+        "s3:ListTagsForResource",
+        "s3:PutAccelerateConfiguration",
+        "s3:PutAnalyticsConfiguration",
+        "s3:PutBucketAbac",
+        "s3:PutBucketAcl",
+        "s3:PutBucketCORS",
+        "s3:PutBucketLogging",
+        "s3:PutBucketNotification",
+        "s3:PutBucketObjectLockConfiguration",
+        "s3:PutBucketOwnershipControls",
+        "s3:PutBucketPolicy",
+        "s3:PutBucketPublicAccessBlock",
+        "s3:PutBucketTagging",
+        "s3:PutBucketVersioning",
+        "s3:PutBucketWebsite",
+        "s3:PutEncryptionConfiguration",
+        "s3:PutIntelligentTieringConfiguration",
+        "s3:PutInventoryConfiguration",
+        "s3:PutLifecycleConfiguration",
+        "s3:PutMetricsConfiguration",
+        "s3:PutObjectAcl",
+        "s3:PutReplicationConfiguration",
+        "s3:TagResource",
+        "s3:UntagResource",
+        "s3:UpdateBucketMetadataAnnotationTableConfiguration",
+        "s3:UpdateBucketMetadataInventoryTableConfiguration",
+        "s3:UpdateBucketMetadataJournalTableConfiguration"
+      ],
+      "Resource": [
+        "arn:aws:s3:::conveyor*"
+      ]
+    },
+    {
+      "Sid": "ReadTheCdkAssetBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:ListTagsForResource"
+      ],
+      "Resource": "arn:aws:s3:::cdk-hnb659fds-assets-${aws:PrincipalAccount}-*"
+    },
+    {
+      "Sid": "SampleRolesOnly",
+      "Effect": "Allow",
+      "Action": [
+        "iam:DeleteRole",
+        "iam:GetRole",
+        "iam:UpdateRole",
+        "iam:UpdateAssumeRolePolicy",
+        "iam:TagRole",
+        "iam:UntagRole",
+        "iam:PassRole",
+        "iam:GetRolePolicy",
+        "iam:CreateInstanceProfile",
+        "iam:DeleteInstanceProfile",
+        "iam:GetInstanceProfile",
+        "iam:AddRoleToInstanceProfile",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:ListRolePolicies",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListRoleTags",
+        "iam:TagInstanceProfile",
+        "iam:UntagInstanceProfile",
+        "iam:UpdateRoleDescription"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/Conveyor*",
+        "arn:aws:iam::*:instance-profile/Conveyor*"
+      ]
+    },
+    {
+      "Sid": "SampleRolesKeepTheBoundary",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateRole",
+        "iam:PutRolePermissionsBoundary",
+        "iam:PutRolePolicy",
+        "iam:DeleteRolePolicy",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy"
+      ],
+      "Resource": "arn:aws:iam::*:role/Conveyor*",
+      "Condition": {
+        "ArnLike": {
+          "iam:PermissionsBoundary": "arn:aws:iam::*:policy/ConveyorSampleBoundary"
+        }
+      }
+    },
+    {
+      "Sid": "GuardDutyServiceRole",
+      "Effect": "Allow",
+      "Action": "iam:CreateServiceLinkedRole",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "iam:AWSServiceName": [
+            "malware-protection.guardduty.amazonaws.com",
+            "malware-protection-plan.guardduty.amazonaws.com"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ReadSampleStackOutputs",
+      "Effect": "Allow",
+      "Action": "cloudformation:DescribeStacks",
+      "Resource": "arn:aws:cloudformation:*:*:stack/Conveyor*/*"
+    },
+    {
+      "Sid": "NoResourceLevelCloudFront",
+      "Effect": "Allow",
+      "Action": [
+        "cloudfront:CreateDistribution",
+        "cloudfront:CreateOriginAccessControl",
+        "cloudfront:CreateResponseHeadersPolicy"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "NoResourceLevelCognito",
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:CreateUserPool"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "NoResourceLevelGuardDutyMalwareProtectionPlan",
+      "Effect": "Allow",
+      "Action": [
+        "guardduty:CreateMalwareProtectionPlan"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

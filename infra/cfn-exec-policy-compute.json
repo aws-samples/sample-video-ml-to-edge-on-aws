@@ -1,0 +1,282 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Ec2InTheAccount",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:AssociateIamInstanceProfile",
+        "ec2:AssociateRouteTable",
+        "ec2:AssociateSubnetCidrBlock",
+        "ec2:AttachVolume",
+        "ec2:AuthorizeSecurityGroupEgress",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:CreateFlowLogs",
+        "ec2:CreateLaunchTemplate",
+        "ec2:CreateLaunchTemplateVersion",
+        "ec2:CreateRouteTable",
+        "ec2:CreateSecurityGroup",
+        "ec2:CreateSubnet",
+        "ec2:CreateTags",
+        "ec2:CreateVpc",
+        "ec2:CreateVpcEncryptionControl",
+        "ec2:CreateVpcEndpoint",
+        "ec2:DeleteLaunchTemplate",
+        "ec2:DeleteTags",
+        "ec2:DetachVolume",
+        "ec2:DisassociateIamInstanceProfile",
+        "ec2:DisassociateRouteTable",
+        "ec2:DisassociateSubnetCidrBlock",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:ModifyInstanceCreditSpecification",
+        "ec2:ModifyInstanceMaintenanceOptions",
+        "ec2:ModifyInstanceMetadataOptions",
+        "ec2:ModifyInstancePlacement",
+        "ec2:ModifyPrivateDnsNameOptions",
+        "ec2:ModifySubnetAttribute",
+        "ec2:ModifyVpcAttribute",
+        "ec2:ModifyVpcEndpoint",
+        "ec2:ModifyVpcTenancy",
+        "ec2:MonitorInstances",
+        "ec2:ReplaceIamInstanceProfileAssociation",
+        "ec2:ReplaceRouteTableAssociation",
+        "ec2:RevokeSecurityGroupEgress",
+        "ec2:RevokeSecurityGroupIngress",
+        "ec2:RunInstances",
+        "ec2:UnmonitorInstances",
+        "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
+        "ec2:UpdateSecurityGroupRuleDescriptionsIngress"
+      ],
+      "Resource": [
+        "arn:aws:ec2:*:${aws:PrincipalAccount}:*",
+        "arn:aws:ec2:*::image/*"
+      ]
+    },
+    {
+      "Sid": "Ec2StopOrDeleteOnlySampleResources",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DeleteFlowLogs",
+        "ec2:DeleteRouteTable",
+        "ec2:DeleteSecurityGroup",
+        "ec2:DeleteSubnet",
+        "ec2:DeleteVpc",
+        "ec2:DeleteVpcEndpoints",
+        "ec2:StartInstances",
+        "ec2:StopInstances",
+        "ec2:TerminateInstances"
+      ],
+      "Resource": [
+        "arn:aws:ec2:*:${aws:PrincipalAccount}:*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/project": "sample-video-ml-to-edge"
+        }
+      }
+    },
+    {
+      "Sid": "SampleKeys",
+      "Effect": "Allow",
+      "Action": [
+        "kms:DescribeKey",
+        "kms:DisableKey",
+        "kms:DisableKeyRotation",
+        "kms:EnableKey",
+        "kms:EnableKeyRotation",
+        "kms:GetKeyPolicy",
+        "kms:GetKeyRotationStatus",
+        "kms:ListResourceTags",
+        "kms:PutKeyPolicy",
+        "kms:ScheduleKeyDeletion",
+        "kms:TagResource",
+        "kms:UntagResource",
+        "kms:UpdateKeyDescription"
+      ],
+      "Resource": [
+        "arn:aws:kms:*:${aws:PrincipalAccount}:key/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/project": "sample-video-ml-to-edge"
+        }
+      }
+    },
+    {
+      "Sid": "AwsManagedKeysThroughTheirServices",
+      "Effect": "Allow",
+      "Action": [
+        "kms:CreateGrant",
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey",
+        "kms:GenerateDataKeyWithoutPlaintext",
+        "kms:ReEncryptFrom",
+        "kms:ReEncryptTo"
+      ],
+      "Resource": [
+        "arn:aws:kms:*:${aws:PrincipalAccount}:key/*"
+      ],
+      "Condition": {
+        "StringLike": {
+          "kms:ViaService": [
+            "lambda.*.amazonaws.com",
+            "ec2.*.amazonaws.com",
+            "s3.*.amazonaws.com"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "Functions",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:AddPermission",
+        "lambda:CreateFunction",
+        "lambda:DeleteFunction",
+        "lambda:DeleteFunctionCodeSigningConfig",
+        "lambda:DeleteFunctionConcurrency",
+        "lambda:DeleteLayerVersion",
+        "lambda:GetFunction",
+        "lambda:GetFunctionCodeSigningConfig",
+        "lambda:GetFunctionRecursionConfig",
+        "lambda:GetFunctionScalingConfig",
+        "lambda:GetLayerVersion",
+        "lambda:GetPolicy",
+        "lambda:GetRuntimeManagementConfig",
+        "lambda:InvokeFunction",
+        "lambda:PassCapacityProvider",
+        "lambda:PublishLayerVersion",
+        "lambda:PublishVersion",
+        "lambda:PutFunctionCodeSigningConfig",
+        "lambda:PutFunctionConcurrency",
+        "lambda:PutFunctionRecursionConfig",
+        "lambda:PutFunctionScalingConfig",
+        "lambda:PutRuntimeManagementConfig",
+        "lambda:RemovePermission",
+        "lambda:TagResource",
+        "lambda:UntagResource",
+        "lambda:UpdateFunctionCode",
+        "lambda:UpdateFunctionConfiguration"
+      ],
+      "Resource": [
+        "arn:aws:lambda:*:${aws:PrincipalAccount}:function:Conveyor*",
+        "arn:aws:lambda:*:${aws:PrincipalAccount}:layer:*"
+      ]
+    },
+    {
+      "Sid": "LogGroups",
+      "Effect": "Allow",
+      "Action": [
+        "logs:AssociateKmsKey",
+        "logs:CreateLogGroup",
+        "logs:DeleteDataProtectionPolicy",
+        "logs:DeleteLogGroup",
+        "logs:DeleteRetentionPolicy",
+        "logs:DisassociateKmsKey",
+        "logs:GetDataProtectionPolicy",
+        "logs:ListTagsForResource",
+        "logs:PutBearerTokenAuthentication",
+        "logs:PutDataProtectionPolicy",
+        "logs:PutLogGroupDeletionProtection",
+        "logs:PutRetentionPolicy",
+        "logs:TagResource",
+        "logs:UntagResource"
+      ],
+      "Resource": [
+        "arn:aws:logs:*:${aws:PrincipalAccount}:log-group:Conveyor*"
+      ]
+    },
+    {
+      "Sid": "ModelPackageGroup",
+      "Effect": "Allow",
+      "Action": [
+        "sagemaker:AddTags",
+        "sagemaker:CreateModelPackageGroup",
+        "sagemaker:DeleteModelPackageGroup",
+        "sagemaker:DeleteModelPackageGroupPolicy",
+        "sagemaker:DeleteTags",
+        "sagemaker:DescribeModelPackageGroup",
+        "sagemaker:GetModelPackageGroupPolicy",
+        "sagemaker:ListTags",
+        "sagemaker:PutModelPackageGroupPolicy"
+      ],
+      "Resource": [
+        "arn:aws:sagemaker:*:${aws:PrincipalAccount}:model-package-group/conveyor-events"
+      ]
+    },
+    {
+      "Sid": "TemplateParameters",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameters"
+      ],
+      "Resource": [
+        "arn:aws:ssm:*:${aws:PrincipalAccount}:parameter/cdk-bootstrap/hnb659fds/*",
+        "arn:aws:ssm:*::parameter/aws/service/*"
+      ]
+    },
+    {
+      "Sid": "NoResourceLevelEc2InTheAccount",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeAvailabilityZones",
+        "ec2:DescribeFlowLogs",
+        "ec2:DescribeIamInstanceProfileAssociations",
+        "ec2:DescribeImages",
+        "ec2:DescribeInstanceAttribute",
+        "ec2:DescribeInstanceCreditSpecifications",
+        "ec2:DescribeInstances",
+        "ec2:DescribeKeyPairs",
+        "ec2:DescribeLaunchTemplates",
+        "ec2:DescribeLaunchTemplateVersions",
+        "ec2:DescribeNetworkAcls",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeRouteTables",
+        "ec2:DescribeSecurityGroupRules",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeTags",
+        "ec2:DescribeVolumes",
+        "ec2:DescribeVpcAttribute",
+        "ec2:DescribeVpcEncryptionControls",
+        "ec2:DescribeVpcEndpoints",
+        "ec2:DescribeVpcs"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "NoResourceLevelCreateKey",
+      "Effect": "Allow",
+      "Action": [
+        "kms:CreateKey"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "NoResourceLevelFunctions",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:GetAccountSettings"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "NoResourceLevelLogGroups",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogDelivery",
+        "logs:DeleteIndexPolicy",
+        "logs:DeleteLogDelivery",
+        "logs:DeleteResourcePolicy",
+        "logs:DescribeIndexPolicies",
+        "logs:DescribeLogGroups",
+        "logs:DescribeResourcePolicies",
+        "logs:PutIndexPolicy",
+        "logs:PutResourcePolicy"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

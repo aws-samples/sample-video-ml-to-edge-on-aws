@@ -1,0 +1,19 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+[Unit]
+Description=Conveyor gateway local UI on 127.0.0.1:8080
+After=network-online.target
+
+[Service]
+User=conveyor
+Environment=PYTHONPATH=/opt/conveyor/lib:/opt/conveyor/gateway
+ExecStart=/usr/bin/python3.12 /opt/conveyor/gateway/ui.py /opt/conveyor
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadOnlyPaths=/opt/conveyor
+
+[Install]
+WantedBy=multi-user.target

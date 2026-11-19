@@ -1,0 +1,9 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+#
+# The tests/train dependencies: requirements-dev.txt plus CPU-only torch.
+# The setuptools floor keeps the resolver off an older copy on the PyTorch index.
+-r requirements-dev.in
+-c requirements-dev.txt
+torch==2.14.1
+setuptools>=80

@@ -1,0 +1,7 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+#
+# Redraws docs/architecture.png (python docs/architecture.py docs/architecture).
+# Also needs the Graphviz dot binary from the operating system's package manager.
+diagrams==0.25.1
+pillow==13.0.0

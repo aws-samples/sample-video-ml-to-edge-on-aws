@@ -1,0 +1,15 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+#
+# The packages the training job adds to the SageMaker PyTorch image, compiled with
+# hashes into requirements.txt. torch comes with the image.
+# The first three match requirements-dev.txt (tests/ml checks), so CI tests what the job runs.
+opencv-python-headless==5.0.0.93
+onnx==1.23.2
+onnxruntime==1.31.0
+# The versions pytorch-training:2.9.0-gpu-py312 ships, so pip keeps them.
+ml-dtypes==0.6.0
+numpy==2.5.3
+packaging==24.2
+protobuf==6.33.6
+typing-extensions==4.16.0
