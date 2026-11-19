@@ -194,9 +194,9 @@ release function signs it. A production deployment separates these rights; see
 ```bash
 # 1. Download the dataset from this sample's GitHub release asset (dataset-v1) and
 #    verify it into data/conveyor (manifest.json plus <site>/<split>/<label>/*.mp4;
-#    train and val are contributed, test is held out). The archive is not published
-#    yet: until the dataset-v1 asset and its digest are, the script refuses to run
-#    without an archive URL and SHA-256 (pass your own dataset's).
+#    train and val are contributed, test is held out). The script refuses an archive
+#    whose SHA-256 is not the one it pins. To use your own dataset, pass its archive
+#    URL and SHA-256.
 .venv/bin/python scripts/fetch_dataset.py
 
 # 2. Create one contributor per site. The script passes a one-time password to

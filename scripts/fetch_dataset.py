@@ -24,8 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DATASET_URL = "https://github.com/aws-samples/sample-video-ml-to-edge-on-aws/releases/download/dataset-v1/conveyor-dataset.tar.gz"
 # The manifest inside the archive cannot vouch for the archive itself.
-UNPUBLISHED = "set-at-publication"
-DATASET_SHA256 = UNPUBLISHED
+DATASET_SHA256 = "7f0d860a38adf5d1ad8ee4fa57b15650f2dec93ff5622ef9435ba9c13c84557e"
 
 
 def verify(dest: Path) -> list[str]:
@@ -63,8 +62,6 @@ def main() -> int:
     if len(args) not in (0, 2, 3):
         raise SystemExit(__doc__)
     url, sha256 = args[:2] if args else (DATASET_URL, DATASET_SHA256)
-    if sha256 == UNPUBLISHED:
-        raise SystemExit("the dataset-v1 asset is not published yet: pass an archive URL and its SHA-256")
     dest = Path(args[2]) if len(args) > 2 else ROOT / "data" / "conveyor"
     problems = fetch(url, sha256, dest)
     for problem in problems:

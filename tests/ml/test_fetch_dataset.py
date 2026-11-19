@@ -74,9 +74,3 @@ def test_member_escaping_the_destination_is_refused(tmp_path):
 def test_a_url_that_is_not_https_is_refused(tmp_path):
     with pytest.raises(SystemExit, match="not https"):
         fetch_dataset.fetch(archive(tmp_path, {}, []).as_uri(), "", tmp_path / "out")
-
-
-def test_the_unpublished_archive_is_refused_with_a_clear_message(monkeypatch):
-    monkeypatch.setattr(fetch_dataset.sys, "argv", ["fetch_dataset.py"])
-    with pytest.raises(SystemExit, match="the dataset-v1 asset is not published yet"):
-        fetch_dataset.main()
